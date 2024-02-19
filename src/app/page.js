@@ -1,9 +1,11 @@
+'use client';
 
+import Header from "@/components/header-layout/Header";
 
 export default function Home() {
   return (
     <main>
-      <h1>PROJETO</h1>
+      <Header/>
     </main>
   );
 }
