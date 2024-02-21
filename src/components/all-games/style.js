@@ -19,6 +19,10 @@ export const Filters = styled.div`
     .selects{
         display: flex;
         gap: 15px;
+
+        @media screen and (max-width: 900px) {
+        display: none;
+    }
     }
 
     .inputs{
@@ -54,6 +58,11 @@ export const GamesContent = styled.div`
                 position: relative;
                 cursor: pointer;
                 box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+                @media screen and (max-width: 768px) {
+                    width: 350px;
+                    height: 350px;
+                }
 
                 .card-body{
                     display: flex;
