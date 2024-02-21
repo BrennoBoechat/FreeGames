@@ -8,18 +8,17 @@ export const GamesContainer = styled.div`
 `
 
 export const GamesContent = styled.div`
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 50px;
     
     
 
     ul{
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3 colunas com tamanhos iguais */
-        gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        gap: 50px;
+        gap: 90px;
 
         li{
             display: flex;
@@ -27,16 +26,54 @@ export const GamesContent = styled.div`
             align-items: center;
             justify-content: center;
 
-            p{
+            a{
                 color: black;
                 font-size: 23px;
                 margin-top: 15px;
+                cursor: pointer;
+                text-decoration: none;
+
+                position: relative;
+                letter-spacing: 0.5px;
+                padding: 0 10px;
             }
+
+            a:after{
+                    content: "";
+                    position: absolute;
+                    background-color: black;
+                    height: 3px;
+                    width: 0;
+                    left: 0;
+                    bottom: -5px;
+                    transition: 0.3s;
+                }
+
+            a:hover:after{
+                    width: 100%;
+                }
 
             img{
                 border-radius: 15px;
                 box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             }
         }
+    }
+`
+
+export const Filters = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 50px;
+
+    .selects{
+        display: flex;
+        gap: 15px;
+    }
+
+    .inputs{
+        display: flex;
+        gap: 10px;
     }
 `

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from '@/constants/urls';
-import { GamesContainer, GamesContent } from './style';
+import { GamesContainer, GamesContent, Filters } from './style';
 
 function Games() {
     const endpoint = "games";
@@ -8,6 +8,7 @@ function Games() {
     const [sortBy, setSortBy] = useState('release-date');
     const [platform, setPlatform] = useState('browser');
     const [category, setCategory] = useState('mmorpg');
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         async function fetchGames() {
@@ -45,36 +46,54 @@ function Games() {
         setCategory(e.target.value);
     };
 
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const filteredGames = games.filter(game =>
+        game.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <GamesContainer>
             <GamesContent>
-                <label htmlFor="sort-select">Filtrar por:</label>
-                <select id="sort-select" value={sortBy} onChange={handleSortChange}>
-                    <option value="alphabetical">Alphabetical</option>
-                    <option value="release-date">Release Date</option>
-                    <option value="popularity">Popularity</option>
-                    <option value="relevance">Relevance</option>
-                </select>
+              <Filters>
+                <div className='inputs'>
+                        <label htmlFor="search-input">Buscar:</label>
+                        <input type="text" id="search-input" value={searchTerm} onChange={handleSearchChange} />
+                </div>
 
-                <label htmlFor="platform-select">Plataforma:</label>
-                <select id="platform-select" value={platform} onChange={handlePlatformChange}>
-                    <option value="browser">Browser</option>
-                    <option value="pc">PC</option>
-                </select>
+                <div className='selects'>
+                  <label htmlFor="sort-select">Sort by:</label>
+                        <select id="sort-select" value={sortBy} onChange={handleSortChange}>
+                            <option value="alphabetical">Alphabetical</option>
+                            <option value="release-date">Release Date</option>
+                            <option value="popularity">Popularity</option>
+                            <option value="relevance">Relevance</option>
+                        </select>
 
-                <label htmlFor="category-select">Categoria:</label>
-                <select id="category-select" value={category} onChange={handleCategoryChange}>
-                    <option value="mmorpg">MMORPG</option>
-                    <option value="mmo">MMO</option>
-                    <option value="strategy">Strategy</option>
-                    <option value="shooter">Shooter</option>
-                </select>
+                        <label htmlFor="platform-select">Platform:</label>
+                        <select id="platform-select" value={platform} onChange={handlePlatformChange}>
+                            <option value="browser">Browser</option>
+                            <option value="pc">PC</option>
+                        </select>
+
+                        <label htmlFor="category-select">Category:</label>
+                        <select id="category-select" value={category} onChange={handleCategoryChange}>
+                            <option value="mmorpg">MMORPG</option>
+                            <option value="mmo">MMO</option>
+                            <option value="strategy">Strategy</option>
+                            <option value="shooter">Shooter</option>
+                        </select>
+                  </div>
+
+              </Filters>
 
                 <ul>
-                    {games.map(game => (
+                    {filteredGames.map(game => (
                         <li key={game.id}>
                             <img src={game.thumbnail} alt={game.title} width={450} />
-                            <p>{game.title}</p>
+                            <a>{game.title}</a>
                         </li>
                     ))}
                 </ul>
