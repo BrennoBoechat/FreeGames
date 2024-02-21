@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { BASE_URL } from '@/constants/urls';
 import { GamesContainer, GamesContent, Filters } from './style';
 
@@ -24,8 +26,12 @@ function Games() {
                 if (!response.ok) {
                     throw new Error('Falha na solicitação: ' + response.status);
                 }
+
                 const data = await response.json();
                 setGames(data);
+
+                console.log(data)
+
             } catch (error) {
                 console.error("Ocorreu um erro", error);
             }
@@ -33,6 +39,7 @@ function Games() {
 
         fetchGames();
     }, [platform, category, sortBy]);
+
 
     const handleSortChange = (e) => {
         setSortBy(e.target.value);
@@ -54,31 +61,35 @@ function Games() {
         game.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const formatDate = (date) => {
+        return format(new Date(date), 'dd/MM/yyyy', { locale: ptBR });
+    };
+
+
     return (
         <GamesContainer>
-            <GamesContent>
-              <Filters>
+            <Filters>
                 <div className='inputs'>
                         <label htmlFor="search-input">Buscar:</label>
                         <input type="text" id="search-input" value={searchTerm} onChange={handleSearchChange} />
                 </div>
 
                 <div className='selects'>
-                  <label htmlFor="sort-select">Sort by:</label>
+                  <label htmlFor="sort-select">Filtrar por:</label>
                         <select id="sort-select" value={sortBy} onChange={handleSortChange}>
-                            <option value="alphabetical">Alphabetical</option>
-                            <option value="release-date">Release Date</option>
-                            <option value="popularity">Popularity</option>
-                            <option value="relevance">Relevance</option>
+                            <option value="alphabetical">Ordem alfabética</option>
+                            <option value="release-date">Data de lançamento</option>
+                            <option value="popularity">Popularidade</option>
+                            <option value="relevance">Relevancia</option>
                         </select>
 
-                        <label htmlFor="platform-select">Platform:</label>
+                        <label htmlFor="platform-select">Plataforma:</label>
                         <select id="platform-select" value={platform} onChange={handlePlatformChange}>
-                            <option value="browser">Browser</option>
+                            <option value="browser">Navegador</option>
                             <option value="pc">PC</option>
                         </select>
 
-                        <label htmlFor="category-select">Category:</label>
+                        <label htmlFor="category-select">Categoria:</label>
                         <select id="category-select" value={category} onChange={handleCategoryChange}>
                             <option value="mmorpg">MMORPG</option>
                             <option value="mmo">MMO</option>
@@ -86,14 +97,22 @@ function Games() {
                             <option value="shooter">Shooter</option>
                         </select>
                   </div>
-
               </Filters>
-
+            <GamesContent>
                 <ul>
                     {filteredGames.map(game => (
                         <li key={game.id}>
-                            <img src={game.thumbnail} alt={game.title} width={450} />
-                            <a>{game.title}</a>
+                            <div className='card'>
+                                <img src={game.thumbnail} alt={game.title}/>
+                                
+                                <div className='card-body'>
+                                    <h1>{game.title}</h1>
+                                    <a>{game.platform}</a>
+                                    <a>{formatDate(game.release_date)}</a> {/* Formatar a data de lançamento */}
+                                    <a>{game.short_description}</a>
+                                </div>
+                            </div>
+                            <h1 className='game-title'><a target='_blank' href={game.game_url}>{game.title}</a></h1>
                         </li>
                     ))}
                 </ul>
