@@ -16,18 +16,48 @@ export const Filters = styled.div`
     margin-top: 50px;
     margin-bottom: 30px;
 
+    @media screen and (max-width: 900px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+    }
+
     .selects{
         display: flex;
+        align-items: center;
         gap: 15px;
 
         @media screen and (max-width: 900px) {
-        display: none;
+        display: flex;
+        flex-direction: column;
     }
+
+        select{
+            border-radius: 5px;
+            padding: 5px;
+            border: 2px solid #01203E;
+            width: 170px;
+        }
     }
 
     .inputs{
         display: flex;
+        align-items: center;
         gap: 10px;
+
+        @media screen and (max-width: 900px) {
+        display: flex;
+        flex-direction: column;
+    }
+
+        input{
+            border-radius: 5px;
+            padding: 8px;
+            width: 250px;
+            border: 2px solid #01203E;
+        }
     }
 `
 
@@ -51,8 +81,8 @@ export const GamesContent = styled.div`
             justify-content: center;
 
             .card{
-                width: 450px;
-                height: 350px;
+                width: 400px;
+                height: 300px;
                 border-radius: 20px;
                 overflow: hidden;
                 position: relative;

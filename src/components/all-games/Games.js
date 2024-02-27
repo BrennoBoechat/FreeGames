@@ -108,7 +108,7 @@ function Games() {
                                 <div className='card-body'>
                                     <h1>{game.title}</h1>
                                     <a>{game.platform}</a>
-                                    <a>{formatDate(game.release_date)}</a> {/* Formatar a data de lançamento */}
+                                    <a>{formatDate(game.release_date)}</a>
                                     <a>{game.short_description}</a>
                                 </div>
                             </div>

@@ -10,7 +10,8 @@ function Header() {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Image src={Logo} alt='logo' width={200} height={200}/>
+        <Image src={Logo} alt='logo' width={150} height={150}/>
+
       </HeaderContent>
     </HeaderContainer>
       
